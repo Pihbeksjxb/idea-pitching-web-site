@@ -1,0 +1,653 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>About</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        :root{
+            --brand-yellow: #FFD400;
+            --brand-dark: #111;
+            --muted: rgba(255,255,255,0.75);
+            --accent: #ff6b35;
+        }
+
+        /* Page background: black */
+        body {
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            -webkit-font-smoothing:antialiased;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        /* Navbar: yellow with black text and subtle animation */
+        .navbar {
+            background: var(--brand-yellow) !important;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            animation: navDrop 0.7s cubic-bezier(.2,.9,.3,1);
+        }
+        .navbar-brand, .nav-link {
+            color: #000 !important;
+            font-weight: 700;
+        }
+        .nav-link { transition: transform .18s ease, color .18s ease; }
+        .nav-link:hover { transform: translateY(-2px); text-decoration: none; color: #000 !important; }
+        .nav-link.active {
+            background: #000;
+            color: var(--brand-yellow) !important;
+            border-radius: 8px;
+            padding: 6px 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+
+        @keyframes navDrop {
+            from { transform: translateY(-14px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Container & headings */
+        .container { padding-top: 30px; }
+        h2 { font-weight: 800; letter-spacing: -0.6px; margin-bottom: 8px; }
+        .lead-muted { color: rgba(255,255,255,0.85); }
+
+        /* Team section cards - gradient black -> yellow */
+        .team-row { margin-top: 28px; }
+        .team-card {
+            /* Gradient that starts deep black and flows to brand yellow */
+            background: linear-gradient(160deg,
+                        rgba(10,10,10,0.98) 0%,
+                        rgba(18,18,18,0.95) 45%,
+                        rgba(255,212,0,0.06) 75%,
+                        rgba(255,212,0,0.18) 100%);
+            border: 1px solid rgba(255,212,0,0.08);
+            color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform .28s ease, box-shadow .28s ease, background .28s ease;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.65);
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 22px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.02);
+            background: linear-gradient(160deg,
+                        rgba(10,10,10,0.99) 0%,
+                        rgba(25,20,10,0.96) 45%,
+                        rgba(255,212,0,0.12) 75%,
+                        rgba(255,212,0,0.28) 100%);
+        }
+
+        .avatar {
+            width:120px;height:120px;border-radius:50%;
+            object-fit:cover;border:4px solid rgba(255,212,0,0.22);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+            transition: transform .35s ease, box-shadow .35s ease;
+            background: linear-gradient(135deg,var(--brand-yellow),var(--accent));
+        }
+        .team-card:hover .avatar { transform: scale(1.05) rotate(-2deg); box-shadow: 0 12px 38px rgba(255,212,0,0.08); }
+
+        .role { color: rgba(255,255,255,0.85); margin-bottom:8px; }
+        .bio { color: rgba(255,255,255,0.92); font-size:0.95rem; }
+
+        .profile-cta {
+            background: linear-gradient(90deg,var(--brand-yellow), #ffb800);
+            color: #000;
+            font-weight:700;
+            border-radius:8px;
+            padding:6px 10px;
+            display:inline-block;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .profile-cta:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(255,212,0,0.18); text-decoration:none; }
+
+        /* Animated overlay: stars, colorful blobs, geometric shapes, rockets, electronics traces.
+           Include the <div class="bg-animations"> block immediately after <body> in pages.
+        */
+        :root{
+          --star: #ffffff;
+          --blob-a: #ff6b35;
+          --blob-b: #00d4ff;
+          --blob-c: #9b59ff;
+          --blob-d: #ffd400;
+          --grid-col: rgba(255,255,255,0.03);
+          --bg-opacity: 0.12;
+        }
+
+        .bg-animations{
+          position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; mix-blend-mode: screen;
+          transform: translateZ(0);
+        }
+
+        /* make page content appear above the overlay */
+        nav, header, main, .container, .card, footer { position: relative; z-index: 1; }
+
+        /* STAR LAYERS */
+        .bg-animations .stars {
+          position:absolute; inset:0;
+          background-image: radial-gradient(var(--star) 0.9px, rgba(255,255,255,0) 1.8px);
+          background-size: 240px 240px; opacity: 0.22; animation: starsDrift 36s linear infinite;
+          filter: drop-shadow(0 0 2px rgba(255,255,255,0.03));
+        }
+        .bg-animations .stars.layer {
+          background-image: radial-gradient(var(--star) 1.6px, rgba(255,255,255,0) 2.6px);
+          background-size: 96px 96px; opacity: 0.12; animation: starsFloat 58s linear infinite reverse;
+        }
+        @keyframes starsDrift { from{ transform: translateY(0) } to{ transform: translateY(-90px) } }
+        @keyframes starsFloat { from{ transform: translateX(0) } to{ transform: translateX(120px) } }
+
+        /* BLOBS */
+        .bg-animations .blobs{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .blob{ position:absolute; border-radius:50%; filter: blur(44px) saturate(1.05); opacity:var(--bg-opacity); will-change:transform,opacity; }
+        .bg-animations .blob.b1{ width:520px;height:520px; left:-160px; top:6%; background: radial-gradient(circle at 30% 30%, var(--blob-a), transparent 45%); animation: floatA 14s ease-in-out infinite; }
+        .bg-animations .blob.b2{ width:360px;height:360px; right:-120px; top:8%; background: radial-gradient(circle at 20% 20%, var(--blob-b), transparent 45%); animation: floatB 16s ease-in-out infinite; }
+        .bg-animations .blob.b3{ width:460px;height:460px; left:8%; bottom:-160px; background: radial-gradient(circle at 60% 60%, var(--blob-c), transparent 45%); animation: floatC 20s ease-in-out infinite; opacity:0.09; }
+        .bg-animations .blob.b4{ width:300px;height:300px; right:12%; bottom:-80px; background: radial-gradient(circle at 50% 50%, var(--blob-d), transparent 45%); animation: floatA 12s ease-in-out infinite; opacity:0.16; }
+
+        @keyframes floatA{ 0%{transform:translateY(0)}50%{transform:translateY(-36px) translateX(10px)}100%{transform:translateY(0)} }
+        @keyframes floatB{ 0%{transform:translateY(0)}50%{transform:translateY(-52px) translateX(-14px)}100%{transform:translateY(0)} }
+        @keyframes floatC{ 0%{transform:translateY(0)}50%{transform:translateY(-72px) translateX(22px)}100%{transform:translateY(0)} }
+
+        /* GEOMETRIC SHAPES */
+        .bg-animations .shapes{ position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: overlay; }
+        .bg-animations .shape{ position:absolute; opacity:0.08; filter: blur(6px); transform-origin:center; }
+        .bg-animations .shape.s1{ width:260px;height:160px; left:6%; top:18%; background: linear-gradient(135deg,#fff 0%, rgba(255,255,255,0) 60%); clip-path: polygon(0 0,100% 0,80% 100%,20% 100%); animation: spinSlow 28s linear infinite; }
+        .bg-animations .shape.s2{ width:160px;height:160px; right:8%; top:32%; background: linear-gradient(90deg,#00d4ff66, transparent 60%); transform: rotate(18deg); animation: spinRev 34s linear infinite; }
+        .bg-animations .shape.s3{ width:120px;height:120px; left:60%; bottom:14%; background: linear-gradient(90deg,#ff6b3566, transparent 60%); animation: spinSlow 30s linear infinite; }
+        @keyframes spinSlow { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }
+        @keyframes spinRev  { from{ transform: rotate(0deg) } to{ transform: rotate(-360deg) } }
+
+        /* GRID */
+        .bg-animations .grid{
+          position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.06;
+          background-image:
+            linear-gradient(90deg, transparent 49.9%, var(--grid-col) 50%, transparent 50.1%),
+            linear-gradient(0deg, transparent 49.9%, var(--grid-col) 50%, transparent 50.1%);
+          background-size: 220px 220px, 220px 220px;
+          mix-blend-mode: overlay; filter: blur(0.6px);
+        }
+
+        /* WAVES bottom */
+        .bg-animations .waves{ position:absolute; left:0; right:0; bottom:-12%; height:42%; z-index:0; pointer-events:none; opacity:0.12; overflow:hidden; }
+        .bg-animations .wave{ position:absolute; left:-10%; right:-10%; bottom:0; height:140%; background:
+          radial-gradient(circle at 20% 30%, rgba(0,120,220,0.18), transparent 20%),
+          radial-gradient(circle at 80% 80%, rgba(255,107,53,0.12), transparent 25%); animation: waveMove 16s linear infinite; filter: blur(26px) saturate(1.05); }
+        .bg-animations .wave.w2 { animation-duration:22s; transform: translateY(6%); opacity:0.08; }
+        @keyframes waveMove { 0%{ transform: translateX(0) } 50%{ transform: translateX(-8%) } 100%{ transform: translateX(0) } }
+
+        /* SHOOTING STARS */
+        .bg-animations .shooting{ position:absolute; inset:0; z-index:0; pointer-events:none;}
+        .bg-animations .shooting .shoot{ position:absolute; width:2px; height:80px; right:10%; top:8%; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0)); transform: rotate(-24deg); filter: blur(0.6px); opacity:0; animation: shoot1 6.8s linear infinite; }
+        .bg-animations .shooting .shoot.s2{ right:60%; top:20%; animation-delay: 2.4s; animation-duration: 8.2s; }
+        @keyframes shoot1 { 0%{ opacity:0; transform: translateX(0) translateY(0) rotate(-24deg)} 10%{ opacity:1 } 50%{ opacity:1; transform: translateX(-420px) translateY(-140px) rotate(-24deg)} 90%{ opacity:0 } 100%{ opacity:0; transform: translateX(0) translateY(0) rotate(-24deg)} }
+
+        /* CONSTELLATION LINES */
+        .bg-animations .constellation{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .constellation svg{ width:100%; height:100%; opacity:0.06; stroke: #fff; stroke-width:1; filter: blur(0.2px); }
+
+        /* ROCKETS */
+        .bg-animations .rocket{ position:absolute; font-size:20px; transform-origin:center; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45)); will-change: transform, opacity; opacity:0.95; animation: rocketFlight linear infinite; }
+        .bg-animations .rocket.r1{ left:8%; top:70%; font-size:28px; animation-duration:9.6s; animation-delay:1s; transform:rotate(-14deg); }
+        .bg-animations .rocket.r2{ left:38%; top:80%; font-size:22px; animation-duration:12.4s; animation-delay:3.2s; transform:rotate(-18deg); }
+        .bg-animations .rocket.r3{ left:70%; top:62%; font-size:26px; animation-duration:11.2s; animation-delay:5.6s; transform:rotate(-12deg); }
+        @keyframes rocketFlight { 0%{ transform: translate(0,0) scale(1) rotate(-10deg); opacity:0 } 8%{ opacity:1 } 50%{ transform: translate(-520px,-420px) scale(1.05) rotate(-22deg); opacity:1 } 92%{ opacity:0.15 } 100%{ transform: translate(0,0) scale(1) rotate(-10deg); opacity:0 } }
+
+        /* ELECTRONICS (SVG traces animation: fill/stroke animated in markup) */
+        /* SPARKLES */
+        .bg-animations .sparkles{ position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: screen; }
+        .bg-animations .sparkles .s{ position:absolute; width:6px;height:6px;border-radius:50%; background: radial-gradient(circle,#fff, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0) 70%); filter: blur(0.8px); opacity:0.9; animation: twinkle 7s linear infinite; }
+        .bg-animations .sparkles .s.s1{ left:8%; top:14%; animation-duration:6.8s; }
+        .bg-animations .sparkles .s.s2{ left:30%; top:40%; animation-duration:8.2s; background: #ffd9a6; width:8px;height:8px; }
+        .bg-animations .sparkles .s.s3{ left:66%; top:12%; animation-duration:7.1s; background: #a6e7ff; opacity:0.85; }
+        @keyframes twinkle { 0%{opacity:0; transform:translateY(0)}10%{opacity:1}50%{transform:translateY(-36px);opacity:.9}90%{opacity:0.2}100%{transform:translateY(0);opacity:0} }
+
+        /* responsive */
+        @media (max-width:767px){ .bg-animations .blob.b1, .bg-animations .blob.b3, .bg-animations .rocket, .bg-animations .electronics { display:none; } }
+
+        /* Container for background animations (stars, blobs, etc.) */
+        .bg-animations {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          overflow: hidden;
+          z-index: 0;
+        }
+
+        /* STAR ANIMATIONS */
+        .stars {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: radial-gradient(var(--star) 0.9px, rgba(255,255,255,0) 1.8px);
+          background-size: 240px 240px;
+          opacity: 0.22;
+          animation: starsDrift 36s linear infinite;
+          filter: drop-shadow(0 0 2px rgba(255,255,255,0.03));
+        }
+        .stars.layer {
+          background-image: radial-gradient(var(--star) 1.6px, rgba(255,255,255,0) 2.6px);
+          background-size: 96px 96px;
+          opacity: 0.12;
+          animation: starsFloat 58s linear infinite reverse;
+        }
+
+        @keyframes starsDrift {
+          from { transform: translateY(0); }
+          to { transform: translateY(-90px); }
+        }
+        @keyframes starsFloat {
+          from { transform: translateX(0); }
+          to { transform: translateX(120px); }
+        }
+
+        /* BLOB ANIMATIONS */
+        .blobs {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(44px) saturate(1.05);
+          opacity: var(--bg-opacity);
+          will-change: transform, opacity;
+        }
+        .blob.b1 {
+          width: 520px;
+          height: 520px;
+          left: -160px;
+          top: 6%;
+          background: radial-gradient(circle at 30% 30%, var(--blob-a), transparent 45%);
+          animation: floatA 14s ease-in-out infinite;
+        }
+        .blob.b2 {
+          width: 360px;
+          height: 360px;
+          right: -120px;
+          top: 8%;
+          background: radial-gradient(circle at 20% 20%, var(--blob-b), transparent 45%);
+          animation: floatB 16s ease-in-out infinite;
+        }
+        .blob.b3 {
+          width: 460px;
+          height: 460px;
+          left: 8%;
+          bottom: -160px;
+          background: radial-gradient(circle at 60% 60%, var(--blob-c), transparent 45%);
+          animation: floatC 20s ease-in-out infinite;
+          opacity: 0.09;
+        }
+        .blob.b4 {
+          width: 300px;
+          height: 300px;
+          right: 12%;
+          bottom: -80px;
+          background: radial-gradient(circle at 50% 50%, var(--blob-d), transparent 45%);
+          animation: floatA 12s ease-in-out infinite;
+          opacity: 0.16;
+        }
+
+        @keyframes floatA {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-36px) translateX(10px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes floatB {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-52px) translateX(-14px); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes floatC {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-72px) translateX(22px); }
+          100% { transform: translateY(0); }
+        }
+
+        /* GEOMETRIC SHAPES ANIMATIONS */
+        .shapes {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+          mix-blend-mode: overlay;
+        }
+        .shape {
+          position: absolute;
+          opacity: 0.08;
+          filter: blur(6px);
+          transform-origin: center;
+        }
+        .shape.s1 {
+          width: 260px;
+          height: 160px;
+          left: 6%;
+          top: 18%;
+          background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0) 60%);
+          clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+          animation: spinSlow 28s linear infinite;
+        }
+        .shape.s2 {
+          width: 160px;
+          height: 160px;
+          right: 8%;
+          top: 32%;
+          background: linear-gradient(90deg, #00d4ff66, transparent 60%);
+          transform: rotate(18deg);
+          animation: spinRev 34s linear infinite;
+        }
+        .shape.s3 {
+          width: 120px;
+          height: 120px;
+          left: 60%;
+          bottom: 14%;
+          background: linear-gradient(90deg, #ff6b3566, transparent 60%);
+          animation: spinSlow 30s linear infinite;
+        }
+
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spinRev {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+
+        /* GRID ANIMATION */
+        .grid {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.06;
+          background-image:
+            linear-gradient(90deg, transparent 49.9%, var(--grid-col) 50%, transparent 50.1%),
+            linear-gradient(0deg, transparent 49.9%, var(--grid-col) 50%, transparent 50.1%);
+          background-size: 220px 220px, 220px 220px;
+          mix-blend-mode: overlay;
+          filter: blur(0.6px);
+        }
+
+        /* WAVES ANIMATION */
+        .waves {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -12%;
+          height: 42%;
+          z-index: 0;
+          pointer-events: none;
+          opacity: 0.12;
+          overflow: hidden;
+        }
+        .wave {
+          position: absolute;
+          left: -10%;
+          right: -10%;
+          bottom: 0;
+          height: 140%;
+          background:
+            radial-gradient(circle at 20% 30%, rgba(0,120,220,0.18), transparent 20%),
+            radial-gradient(circle at 80% 80%, rgba(255,107,53,0.12), transparent 25%);
+          animation: waveMove 16s linear infinite;
+          filter: blur(26px) saturate(1.05);
+        }
+        .wave.w2 {
+          animation-duration: 22s;
+          transform: translateY(6%);
+          opacity: 0.08;
+        }
+        @keyframes waveMove {
+          0% { transform: translateX(0); }
+          50% { transform: translateX(-8%); }
+          100% { transform: translateX(0); }
+        }
+
+        /* SHOOTING STARS ANIMATION */
+        .shooting {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .shooting .shoot {
+          position: absolute;
+          width: 2px;
+          height: 80px;
+          right: 10%;
+          top: 8%;
+          background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0));
+          transform: rotate(-24deg);
+          filter: blur(0.6px);
+          opacity: 0;
+          animation: shoot1 6.8s linear infinite;
+        }
+        .shooting .shoot.s2 {
+          right: 60%;
+          top: 20%;
+          animation-delay: 2.4s;
+          animation-duration: 8.2s;
+        }
+        @keyframes shoot1 {
+          0% { opacity: 0; transform: translateX(0) translateY(0) rotate(-24deg); }
+          10% { opacity: 1; }
+          50% { opacity: 1; transform: translateX(-420px) translateY(-140px) rotate(-24deg); }
+          90% { opacity: 0; }
+          100% { opacity: 0; transform: translateX(0) translateY(0) rotate(-24deg); }
+        }
+
+        /* CONSTELLATION LINES ANIMATION */
+        .constellation {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .constellation svg {
+          width: 100%;
+          height: 100%;
+          opacity: 0.06;
+          stroke: #fff;
+          stroke-width: 1;
+          filter: blur(0.2px);
+        }
+
+        /* ROCKETS ANIMATION */
+        .rocket {
+          position: absolute;
+          font-size: 20px;
+          transform-origin: center;
+          filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
+          will-change: transform, opacity;
+          opacity: 0.95;
+          animation: rocketFlight linear infinite;
+        }
+        .rocket.r1 {
+          left: 8%;
+          top: 70%;
+          font-size: 28px;
+          animation-duration: 9.6s;
+          animation-delay: 1s;
+          transform: rotate(-14deg);
+        }
+        .rocket.r2 {
+          left: 38%;
+          top: 80%;
+          font-size: 22px;
+          animation-duration: 12.4s;
+          animation-delay: 3.2s;
+          transform: rotate(-18deg);
+        }
+        .rocket.r3 {
+          left: 70%;
+          top: 62%;
+          font-size: 26px;
+          animation-duration: 11.2s;
+          animation-delay: 5.6s;
+          transform: rotate(-12deg);
+        }
+        @keyframes rocketFlight {
+          0% { transform: translate(0,0) scale(1) rotate(-10deg); opacity: 0; }
+          8% { opacity: 1; }
+          50% { transform: translate(-520px,-420px) scale(1.05) rotate(-22deg); opacity: 1; }
+          92% { opacity: 0.15; }
+          100% { transform: translate(0,0) scale(1) rotate(-10deg); opacity: 0; }
+        }
+
+        /* ELECTRONICS (SVG traces animation: fill/stroke animated in markup) */
+        /* SPARKLES */
+        .sparkles {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          mix-blend-mode: screen;
+        }
+        .sparkles .s {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: radial-gradient(circle,#fff, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0) 70%);
+          filter: blur(0.8px);
+          opacity: 0.9;
+          animation: twinkle 7s linear infinite;
+        }
+        .sparkles .s.s1 {
+          left: 8%;
+          top: 14%;
+          animation-duration: 6.8s;
+        }
+        .sparkles .s.s2 {
+          left: 30%;
+          top: 40%;
+          animation-duration: 8.2s;
+          background: #ffd9a6;
+          width: 8px;
+          height: 8px;
+        }
+        .sparkles .s.s3 {
+          left: 66%;
+          top: 12%;
+          animation-duration: 7.1s;
+          background: #a6e7ff;
+          opacity: 0.85;
+        }
+        @keyframes twinkle {
+          0% { opacity: 0; transform: translateY(0); }
+          10% { opacity: 1; }
+          50% { transform: translateY(-36px); opacity: .9; }
+          90% { opacity: 0.2; }
+          100% { transform: translateY(0); opacity: 0; }
+        }
+
+        /* responsive */
+        @media (max-width:767px){ .bg-animations .blob.b1, .bg-animations .blob.b3, .bg-animations .rocket, .bg-animations .electronics { display:none; } }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">💡 Idea Pitching</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="submit.html">Submit Idea</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ideas.html">View Ideas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="howtopitch.html">How to Pitch</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 fade-in">
+        <h2>About This Website</h2>
+        <p class="lead-muted">
+            The Student Idea Pitching Platform empowers students to present their innovative ideas
+            through a structured and user-friendly interface. This is a front-end–only project built
+            with HTML and Bootstrap.
+        </p>
+    </div>
+
+    <!-- Team section -->
+    <div class="container team-row mb-5 fade-in">
+        <h3 class="mb-4">Meet the Team</h3>
+
+        <div class="row g-4">
+            <!-- Profile 1 -->
+            <div class="col-md-4">
+                <div class="team-card slide-up">
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/140" alt="Team member 1" class="avatar mb-3">
+                        <h5 class="mb-1">Ch. Kiran</h5>
+                        <div class="role">Frontend Developer</div>
+                        <p class="bio">Built the responsive UI and interactive components using Bootstrap and custom CSS. Focus on accessible layouts and animations.</p>
+                        <a href="#" class="profile-cta">View Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile 2 -->
+            <div class="col-md-4">
+                <div class="team-card slide-up delay-1">
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/140" alt="Team member 2" class="avatar mb-3">
+                        <h5 class="mb-1">K. Vamshi</h5>
+                        <div class="role">UX Designer</div>
+                        <p class="bio">Designed user flows, accessibility improvements, and polished visual details across the site.</p>
+                        <a href="#" class="profile-cta">View Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile 3 -->
+            <div class="col-md-4">
+                <div class="team-card slide-up delay-2">
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/140" alt="Team member 3" class="avatar mb-3">
+                        <h5 class="mb-1">Pranay Raj</h5>
+                        <div class="role">Project Contributor</div>
+                        <p class="bio">Assisted with integrations, testing and documentation to keep the project maintainable.</p>
+                        <a href="#" class="profile-cta">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

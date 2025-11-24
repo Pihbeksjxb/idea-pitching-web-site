@@ -1,0 +1,464 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Idea</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Page background: solid black */
+        body {
+            background: #000;
+            min-height: 100vh;
+            color: #fff;
+            -webkit-font-smoothing:antialiased;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        /* Navbar: yellow with black text */
+        .navbar {
+            background: #FFD400 !important;
+        }
+        .navbar-brand, .nav-link {
+            color: #000 !important;
+            font-weight: 600;
+        }
+        .nav-link.active {
+            background: #000;
+            color: #FFD400 !important;
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+
+        /* Container layout */
+        .container {
+            padding-top: 36px;
+            padding-bottom: 48px;
+        }
+
+        /* Colorful card with animations */
+        .card.p-4 {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255,107,53,0.12), rgba(255,212,0,0.06));
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.02);
+            color: #fff;
+            transition: transform 0.45s cubic-bezier(.2,.9,.3,1), box-shadow 0.45s;
+            transform-origin: center;
+            animation: cardPop 0.9s ease both;
+        }
+        @keyframes cardPop {
+            from { transform: translateY(18px) scale(0.985); opacity: 0; }
+            to   { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .card.p-4:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        /* Decorative colorful blobs (pure CSS) */
+        .card.p-4::before,
+        .card.p-4::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            filter: blur(36px);
+            z-index: 0;
+            opacity: 0.18;
+            transform: translate3d(0,0,0);
+            pointer-events: none;
+        }
+        .card.p-4::before {
+            right: -80px;
+            top: -60px;
+            background: radial-gradient(circle at 20% 20%, #FFD400, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #ff6b35, transparent 40%);
+            animation: floatSlow 8s ease-in-out infinite;
+        }
+        .card.p-4::after {
+            left: -100px;
+            bottom: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle at 30% 30%, #00d4ff 0%, transparent 30%),
+                        radial-gradient(circle at 70% 70%, #9b59ff 0%, transparent 30%);
+            animation: floatSlow 10s ease-in-out infinite reverse;
+        }
+        @keyframes floatSlow {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(6deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Heading banner */
+        .heading-banner {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: linear-gradient(90deg,#ff6b35,#ffa500);
+            color: #fff;
+            font-weight: 800;
+            box-shadow: 0 6px 18px rgba(255,107,53,0.18);
+            margin-bottom: 18px;
+            z-index: 2;
+            position: relative;
+            transform: translateZ(0);
+            animation: bannerFloat 3.2s ease-in-out infinite;
+        }
+        @keyframes bannerFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Form field styling (colorful and elevated) */
+        .form-label {
+            font-weight: 700;
+            color: rgba(255,255,255,0.92);
+            letter-spacing: 0.2px;
+            font-size: 0.95rem;
+        }
+        .form-control, .form-select, textarea.form-control {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important; /* Chrome/Safari autofill/text */
+            caret-color: #ff6b35;
+            padding: 12px 14px;
+            border-radius: 10px;
+            transition: all 0.28s ease;
+            z-index: 2;
+            position: relative;
+            backdrop-filter: blur(3px);
+        }
+        textarea.form-control { min-height: 110px; resize: vertical; }
+
+        /* Placeholder contrast */
+        .form-control::placeholder,
+        textarea.form-control::placeholder {
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* Force visible text for browser autofill (Chrome/Safari) */
+        input:-webkit-autofill,
+        textarea:-webkit-autofill,
+        select:-webkit-autofill {
+            -webkit-text-fill-color: #fff !important;
+            box-shadow: 0 0 0px 1000px rgba(255,255,255,0.04) inset !important;
+        }
+
+        /* Keep inputs readable on focus */
+        .form-control:focus, .form-select:focus, textarea.form-control:focus {
+            outline: none;
+            border-color: rgba(255,212,0,0.95);
+            box-shadow: 0 6px 22px rgba(255,212,0,0.10), 0 0 0 6px rgba(255,212,0,0.03);
+            background: rgba(255,255,255,0.03);
+            color: #fff;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        /* small meta row */
+        .meta-row {
+            display:flex;
+            gap:12px;
+            align-items:center;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            z-index: 2;
+        }
+
+        /* Submit button: vibrant gradient with shine */
+        .btn-submit {
+            background: linear-gradient(90deg,#ff6b35 0%, #ffbd45 60%, #ffd400 100%);
+            color: #111;
+            font-weight: 800;
+            border-radius: 10px;
+            padding: 12px 18px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(255,107,53,0.18), 0 4px 8px rgba(0,0,0,0.4);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            width: 100%;
+            z-index: 2;
+        }
+        .btn-submit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 48px rgba(255,107,53,0.28);
+        }
+        .btn-submit:active {
+            transform: translateY(-1px) scale(0.995);
+        }
+
+        /* small floating help text */
+        .help-line { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+
+        /* Responsive tweaks */
+        @media (max-width: 767px) {
+            .card.p-4::before, .card.p-4::after { display:none; }
+            .card.p-4 { padding: 1.25rem; border-radius: 12px; }
+        }
+
+        /* Animated overlay: stars, colorful blobs, geometric shapes, grid, waves, shooting stars
+           Add <link rel="stylesheet" href="assets/animations.css"> in each page <head>
+           and add the <div class="bg-animations"> block right after <body>
+        */
+        :root{
+          --star: #ffffff;
+          --blob-a: #ff6b35;
+          --blob-b: #00d4ff;
+          --blob-c: #9b59ff;
+          --blob-d: #ffd400;
+          --wave-a: rgba(30,90,160,0.12);
+          --grid: rgba(255,255,255,0.03);
+        }
+
+        /* overlay container */
+        .bg-animations{
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          overflow: hidden;
+          mix-blend-mode: screen;
+        }
+
+        /* ensure page content sits above */
+        nav, header, main, .container, .card, footer { position: relative; z-index: 1; }
+
+        /* STAR LAYERS */
+        .bg-animations .stars{
+          position:absolute; inset:0;
+          background-image: radial-gradient(var(--star) 0.8px, rgba(255,255,255,0) 1px);
+          background-size: 220px 220px;
+          opacity: 0.22;
+          animation: starsDrift 40s linear infinite;
+          filter: drop-shadow(0 0 2px rgba(255,255,255,0.03));
+        }
+        .bg-animations .stars.layer {
+          background-image: radial-gradient(var(--star) 1.6px, rgba(255,255,255,0) 2.4px);
+          background-size: 96px 96px;
+          opacity: 0.12;
+          animation: starsFloat 60s linear infinite reverse;
+        }
+        @keyframes starsDrift { from{ transform: translateY(0) } to{ transform: translateY(-80px) } }
+        @keyframes starsFloat { from{ transform: translateX(0) } to{ transform: translateX(90px) } }
+
+        /* COLORED BLOBS (soft colorful glows) */
+        .bg-animations .blobs { position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .blob { position:absolute; border-radius:50%; filter: blur(40px) saturate(1.05); opacity:0.12; will-change:transform,opacity; }
+        .bg-animations .blob.b1{ width:460px;height:460px; left:-140px; top:6%; background: radial-gradient(circle at 30% 30%, var(--blob-a), transparent 45%); animation: floatA 14s ease-in-out infinite; }
+        .bg-animations .blob.b2{ width:320px;height:320px; right:-100px; top:8%; background: radial-gradient(circle at 20% 20%, var(--blob-b), transparent 45%); animation: floatB 16s ease-in-out infinite; }
+        .bg-animations .blob.b3{ width:520px;height:520px; left:8%; bottom:-160px; background: radial-gradient(circle at 60% 60%, var(--blob-c), transparent 45%); animation: floatC 20s ease-in-out infinite; opacity:0.08; }
+        .bg-animations .blob.b4{ width:240px;height:240px; right:12%; bottom:-80px; background: radial-gradient(circle at 50% 50%, var(--blob-d), transparent 45%); animation: floatA 12s ease-in-out infinite; opacity:0.16; }
+
+        @keyframes floatA{ 0%{transform:translateY(0)}50%{transform:translateY(-28px) translateX(8px)}100%{transform:translateY(0)} }
+        @keyframes floatB{ 0%{transform:translateY(0)}50%{transform:translateY(-44px) translateX(-14px)}100%{transform:translateY(0)} }
+        @keyframes floatC{ 0%{transform:translateY(0)}50%{transform:translateY(-60px) translateX(18px)}100%{transform:translateY(0)} }
+
+        /* GEOMETRIC SHAPES (polygons, rotated boxes) */
+        .bg-animations .shapes{ position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: overlay; }
+        .bg-animations .shape { position:absolute; opacity:0.08; filter: blur(6px); transform-origin:center; }
+        .bg-animations .shape.s1{ width:240px;height:240px; left:6%; top:18%; background: linear-gradient(135deg,#ffffff 0%, transparent 60%); clip-path: polygon(50% 0%, 100% 100%, 0% 100%); animation: spinSlow 28s linear infinite; }
+        .bg-animations .shape.s2{ width:180px;height:180px; right:8%; top:32%; background: linear-gradient(135deg,#00d4ff26, transparent 60%); transform: rotate(18deg); animation: spinRev 34s linear infinite; }
+        .bg-animations .shape.s3{ width:140px;height:140px; left:60%; bottom:14%; background: linear-gradient(135deg,#ff6b3526, transparent 60%); animation: spinSlow 30s linear infinite; }
+        @keyframes spinSlow { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }
+        @keyframes spinRev  { from{ transform: rotate(0deg) } to{ transform: rotate(-360deg) } }
+
+        /* GRID LINES (subtle structure) */
+        .bg-animations .grid {
+          position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.06; background-image:
+            linear-gradient(90deg, transparent 49.9%, var(--grid) 50%, transparent 50.1%),
+            linear-gradient(0deg, transparent 49.9%, var(--grid) 50%, transparent 50.1%);
+          background-size: 220px 220px, 220px 220px;
+          transform: translateZ(0);
+          mix-blend-mode: overlay;
+          filter: blur(0.5px);
+        }
+
+        /* WAVES (soft band of moving gradient at bottom) */
+        .bg-animations .waves { position:absolute; left:0; right:0; bottom:-10%; height:40%; z-index:0; pointer-events:none; overflow:hidden; opacity:0.12; }
+        .bg-animations .wave {
+          position:absolute; left:-10%; right:-10%; bottom:0; height:140%;
+          background: radial-gradient(circle at 20% 30%, rgba(0,120,220,0.18), transparent 20%),
+                      radial-gradient(circle at 80% 80%, rgba(255,107,53,0.12), transparent 25%);
+          transform: translateY(0);
+          animation: waveMove 16s linear infinite;
+          filter: blur(26px) saturate(1.05);
+        }
+        .bg-animations .wave.w2 { animation-duration: 22s; transform: translateY(6%); opacity:0.08; }
+        @keyframes waveMove { 0%{ transform: translateX(0) } 50%{ transform: translateX(-8%) } 100%{ transform: translateX(0) } }
+
+        /* SHOOTING STARS */
+        .bg-animations .shooting { position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .shooting .shoot{
+          position:absolute; width:2px; height:80px; right:10%; top:8%; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0)); transform: rotate(-24deg); filter: blur(0.6px);
+          opacity:0; animation: shoot1 6.8s linear infinite;
+        }
+        .bg-animations .shooting .shoot.s2{ right:60%; top:20%; animation-delay: 2.4s; animation-duration: 8.2s; }
+        @keyframes shoot1 { 0%{ opacity:0; transform: translateX(0) translateY(0) rotate(-24deg) } 10%{ opacity:1 } 50%{ opacity:1; transform: translateX(-400px) translateY(-120px) rotate(-24deg) } 90%{ opacity:0 } 100%{ opacity:0; transform:translateX(0) translateY(0) rotate(-24deg) } }
+
+        /* CONSTELLATION LINES (thin connecting lines) */
+        .bg-animations .constellation { position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .constellation svg { width:100%; height:100%; opacity:0.06; stroke: #fff; stroke-width:1; filter: blur(0.2px); }
+
+        /* SPARKLES (small moving dots) */
+        .bg-animations .sparkles { position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: screen; }
+        .bg-animations .sparkles .s { position:absolute; width:6px;height:6px;border-radius:50%; background: radial-gradient(circle,#fff, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 70%); filter: blur(0.8px); opacity:0.9; animation: twinkle 7s linear infinite; }
+        .bg-animations .sparkles .s.s1{ left:8%; top:14%; animation-duration:6.8s; }
+        .bg-animations .sparkles .s.s2{ left:30%; top:40%; animation-duration:8.2s; background: #ffd9a6; width:8px;height:8px; }
+        .bg-animations .sparkles .s.s3{ left:66%; top:12%; animation-duration:7.1s; background: #a6e7ff; opacity:0.85; }
+        @keyframes twinkle { 0%{opacity:0; transform:translateY(0)}10%{opacity:1}50%{transform:translateY(-36px);opacity:.9}90%{opacity:0.2}100%{transform:translateY(0);opacity:0} }
+
+        /* responsive reductions */
+        @media (max-width:767px){
+          .bg-animations .blob.b1, .bg-animations .blob.b3 { display:none; }
+          .bg-animations .shape { display:none; }
+          .bg-animations .sparkles .s { display:none; }
+          .bg-animations .grid { opacity: 0.03; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">💡 Idea Pitching</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="submit.html">Submit Idea</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ideas.html">View Ideas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="howtopitch.html">How to Pitch</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Form Section -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <h2 class="text-center mb-3" style="color:#fff;">
+                    <span class="heading-banner">Submit Your Idea ✨</span>
+                </h2>
+
+                <div class="card p-4 shadow-sm">
+                    <form>
+                        <div class="meta-row">
+                            <div class="help-line">Share your idea to help students & campus life.</div>
+                            <div class="ms-auto help-line">All fields required</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Idea Title</label>
+                            <input type="text" class="form-control" placeholder="Short, descriptive title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Problem Statement</label>
+                            <textarea class="form-control" placeholder="What problem does this solve?" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Idea Description</label>
+                            <textarea class="form-control" placeholder="Explain the solution, steps and benefits" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Technology</option>
+                                <option>Environment</option>
+                                <option>Education</option>
+                                <option>Healthcare</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Attach optional image URL</label>
+                            <input type="url" class="form-control" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <button class="btn-submit" type="submit">Submit Idea</button>
+                    </form>
+                </div>
+
+                <p class="text-center mt-3" style="color:rgba(255,255,255,0.7);">Thank you — your idea helps build a better campus.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated background overlay -->
+    <div class="bg-animations">
+        <!-- Star layers -->
+        <div class="stars"></div>
+        <div class="stars layer"></div>
+
+        <!-- Colorful blobs -->
+        <div class="blobs">
+            <div class="blob b1"></div>
+            <div class="blob b2"></div>
+            <div class="blob b3"></div>
+            <div class="blob b4"></div>
+        </div>
+
+        <!-- Geometric shapes -->
+        <div class="shapes">
+            <div class="shape s1"></div>
+            <div class="shape s2"></div>
+            <div class="shape s3"></div>
+        </div>
+
+        <!-- Grid lines -->
+        <div class="grid"></div>
+
+        <!-- Waves -->
+        <div class="waves">
+            <div class="wave"></div>
+            <div class="wave w2"></div>
+        </div>
+
+        <!-- Shooting stars -->
+        <div class="shooting">
+            <div class="shoot"></div>
+            <div class="shoot s2"></div>
+        </div>
+
+        <!-- Constellation lines (SVG) -->
+        <div class="constellation">
+            <svg viewBox="0 0 100 100">
+                <!-- Example constellation lines, customize as needed -->
+                <line x1="10" y1="10" x2="40" y2="40" />
+                <line x1="50" y1="20" x2="80" y2="80" />
+                <line x1="90" y1="10" x2="60" y2="90" />
+            </svg>
+        </div>
+
+        <!-- Sparkles -->
+        <div class="sparkles">
+            <div class="s"></div>
+            <div class="s s1"></div>
+            <div class="s s2"></div>
+            <div class="s s3"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background: #000; min-height:100vh; color:#fff; display:flex; align-items:flex-start; }
+        .navbar { background-color: #ffff00 !important; }
+        .brand-box {
+            width:200px;height:80px;border:3px solid #ffff00;border-radius:10px;
+            display:flex;align-items:flex-start;justify-content:flex-start;padding-left:10px;
+            background: rgba(255,107,53,0.12);
+        }
+        .navbar-brand { color:#000; font-weight:bold; font-size:1.1rem; margin:0; line-height:1.2; }
+        .container.reg { max-width:600px; margin-top:4.5rem; }
+
+        /* Heading box (slight blue tint) */
+        .heading-box {
+            background: linear-gradient(180deg, rgba(10,30,60,0.06), rgba(255,255,255,0.02));
+            border:2px solid rgba(30,90,160,0.18);
+            border-radius:10px;
+            padding:15px; margin-bottom:18px; text-align:center;
+        }
+        h2 { margin:0; font-weight:800;
+            background: linear-gradient(90deg,#4da6ff,#0060a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 12px rgba(0,96,168,0.12);
+        }
+
+        /* Card: blue -> black gradient */
+        .card {
+            border-radius:16px;
+            padding:22px;
+            color:#eaf6ff;
+            background: linear-gradient(135deg, #04356b 0%, #001018 65%, #000 100%);
+            border: 1px solid rgba(77,166,255,0.12);
+            box-shadow: 0 10px 30px rgba(2,16,30,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        /* Form labels / inputs */
+        .form-label { font-weight:700; color: #dff1ff; }
+        .form-control {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #eaf6ff !important;
+            -webkit-text-fill-color: #eaf6ff !important;
+            caret-color: #7ed0ff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all 0.18s ease;
+        }
+        .form-control::placeholder { color: rgba(234,246,255,0.4); }
+        .form-control:focus {
+            outline: none;
+            border-color: rgba(77,166,255,0.95);
+            box-shadow: 0 6px 22px rgba(29,111,187,0.12), 0 0 0 6px rgba(29,111,187,0.035);
+            background: rgba(255,255,255,0.018);
+            color: #fff;
+            -webkit-text-fill-color: #fff !important;
+        }
+        input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+            -webkit-text-fill-color: #eaf6ff !important;
+            box-shadow: 0 0 0px 1000px rgba(0,0,0,0.25) inset !important;
+        }
+
+        .muted { color: rgba(234,246,255,0.6); }
+
+        /* Button: blue accent */
+        .btn-primary {
+            background: linear-gradient(90deg,#1e90ff,#00a3ff) !important;
+            border-color: rgba(0,120,220,0.9) !important;
+            color: #fff !important;
+            font-weight:700;
+            border-radius:10px;
+            padding:12px 14px;
+            box-shadow: 0 8px 28px rgba(0,80,140,0.18);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(0,110,200,0.2); transition: 0.18s ease; }
+
+        @media (max-width:576px){ .brand-box{width:150px;height:60px;} .container.reg{margin-top:2.5rem;} }
+
+        /* Animated background: stars, colorful floating blobs, sparkles
+           - Add this file and include it from every page's <head>
+           - The overlay is pointer-events:none so it won't block form interaction
+        */
+
+        :root{
+          --anim-star-color: #ffffff;
+          --blob-a: #ff6b35;
+          --blob-b: #00d4ff;
+          --blob-c: #9b59ff;
+          --blob-d: #ffd400;
+          --bg-opacity: 0.12;
+        }
+
+        /* overlay container */
+        .bg-animations{
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          overflow: hidden;
+          mix-blend-mode: screen;
+        }
+
+        /* ensure page content sits above the animation */
+        .navbar, .container, .card, header, main, footer {
+          position: relative;
+          z-index: 1;
+        }
+
+        /* STAR FIELD: two layered star textures + subtle twinkle */
+        .bg-animations .stars,
+        .bg-animations .stars::after{
+          position: absolute;
+          inset: 0;
+          content: "";
+          background-repeat: repeat;
+          opacity: 0.35;
+          filter: drop-shadow(0 0 2px rgba(255,255,255,0.06));
+        }
+
+        /* distant small stars */
+        .bg-animations .stars{
+          background-image: radial-gradient(var(--anim-star-color) 0.8px, rgba(255,255,255,0) 1px);
+          background-size: 220px 220px;
+          transform: translateZ(0);
+          animation: starsSlow 20s linear infinite;
+          opacity: 0.22;
+        }
+
+        /* closer brighter stars */
+        .bg-animations .stars::after{
+          background-image: radial-gradient(var(--anim-star-color) 1.2px, rgba(255,255,255,0) 1.6px);
+          background-size: 80px 80px;
+          opacity: 0.12;
+          animation: starsDrift 35s linear infinite reverse;
+        }
+
+        /* subtle twinkle overlay */
+        @keyframes starsSlow { from { transform: translateY(0) } to { transform: translateY(-40px) } }
+        @keyframes starsDrift { from { transform: translateX(0) } to { transform: translateX(40px) } }
+
+        /* COLORED FLOATING BLOBS */
+        .bg-animations .blobs{ position:absolute; inset:0; pointer-events:none; z-index:0; }
+        .bg-animations .blob{
+          position:absolute;
+          border-radius: 50%;
+          filter: blur(32px) saturate(1.2);
+          opacity: var(--bg-opacity);
+          transform: translate3d(0,0,0);
+          will-change: transform, opacity;
+        }
+
+        /* individual blob sizes / placements / colors */
+        .bg-animations .blob.b1{ width:360px; height:360px; left:-80px; top:4%; background: radial-gradient(circle at 30% 30%, var(--blob-a), transparent 45%); animation: float1 12s ease-in-out infinite; }
+        .bg-animations .blob.b2{ width:260px; height:260px; right:-60px; top:10%; background: radial-gradient(circle at 20% 20%, var(--blob-b), transparent 45%); animation: float2 14s ease-in-out infinite; }
+        .bg-animations .blob.b3{ width:420px; height:420px; left:8%; bottom:-120px; background: radial-gradient(circle at 60% 60%, var(--blob-c), transparent 45%); animation: float3 18s ease-in-out infinite; opacity:0.10; }
+        .bg-animations .blob.b4{ width:200px; height:200px; right:12%; bottom:-60px; background: radial-gradient(circle at 50% 50%, var(--blob-d), transparent 45%); animation: float1 11s ease-in-out infinite; opacity:0.14; }
+
+        /* subtle movement keyframes */
+        @keyframes float1 { 0%{ transform: translateY(0) } 50%{ transform: translateY(-24px) translateX(8px) } 100%{ transform: translateY(0) } }
+        @keyframes float2 { 0%{ transform: translateY(0) } 50%{ transform: translateY(-36px) translateX(-10px) } 100%{ transform: translateY(0) } }
+        @keyframes float3 { 0%{ transform: translateY(0) } 50%{ transform: translateY(-48px) translateX(18px) } 100%{ transform: translateY(0) } }
+
+        /* SPARKLES: moving small dots / streaks for vibrancy */
+        .bg-animations .sparkles{
+          position:absolute;
+          inset:0;
+          z-index:0;
+          pointer-events:none;
+          mix-blend-mode: screen;
+        }
+        .bg-animations .sparkles .s{
+          position:absolute;
+          width:6px; height:6px; border-radius:50%;
+          background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.35) 40%, rgba(255,255,255,0) 60%);
+          opacity:0.9;
+          transform: translate3d(0,0,0);
+          filter: blur(0.6px);
+          box-shadow: 0 0 8px rgba(255,255,255,0.08);
+        }
+
+        /* place a few sparkles with different animations */
+        .bg-animations .sparkles .s.s1{ left:10%; top:18%; animation: sparkle 6.5s linear infinite; background: #fff; }
+        .bg-animations .sparkles .s.s2{ left:32%; top:40%; animation: sparkle 8.2s linear infinite reverse; background: #ffd9a6; width:8px;height:8px; }
+        .bg-animations .sparkles .s.s3{ left:66%; top:12%; animation: sparkle 7.1s linear infinite; background: #a6e7ff; opacity:0.85; }
+        .bg-animations .sparkles .s.s4{ left:82%; top:52%; animation: sparkle 9.8s linear infinite reverse; background: #f8b4ff; opacity:0.7; }
+        .bg-animations .sparkles .s.s5{ left:50%; top:70%; animation: sparkle 11.2s linear infinite; background: #fff7b2; width:5px;height:5px; opacity:0.65; }
+
+        @keyframes sparkle {
+          0% { transform: translateY(0) scale(1); opacity: 0; }
+          10% { opacity: 1; }
+          50% { transform: translateY(-40px) scale(1.2); opacity: .9; }
+          90% { opacity: 0.2; }
+          100% { transform: translateY(0) scale(1); opacity: 0; }
+        }
+
+        /* responsive: reduce sizes on small screens */
+        @media (max-width: 767px){
+          .bg-animations .blob.b1, .bg-animations .blob.b3 { display:none; }
+          .bg-animations .blob.b2 { width:160px; height:160px; right:-30px; top:8%; }
+          .bg-animations .sparkles .s{ display:none; }
+        }
+    </style>
+</head>
+<body> 
+    <nav class="navbar navbar-dark">
+        <div class="container">
+            <div class="brand-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="160" height="48" viewBox="0 0 320 96" role="img" aria-label="Idea Pitching logo">
+                  <defs>
+                    <linearGradient id="g1" x1="0" x2="1">
+                      <stop offset="0" stop-color="#ffd24d"/>
+                      <stop offset="1" stop-color="#ff6b35"/>
+                    </linearGradient>
+                    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.35"/>
+                    </filter>
+                  </defs>
+
+                  <!-- bulb icon -->
+                  <g transform="translate(16,12)" filter="url(#s)">
+                    <path d="M56 4c-20 0-36 16-36 36 0 12 6 20 14 26l2 6c0 6 8 10 20 10s20-4 20-10l2-6c8-6 14-14 14-26 0-20-16-36-36-36z" fill="url(#g1)"/>
+                    <rect x="44" y="74" width="24" height="8" rx="4" fill="#222"/>
+                  </g>
+
+                  <!-- text -->
+                  <g transform="translate(110,56)">
+                    <text x="0" y="6" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="28" fill="#111">Idea</text>
+                    <text x="0" y="36" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="28" fill="#111">Pitching</text>
+                  </g>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container reg">
+        <div class="heading-box">
+            <h2>Create Account</h2>
+        </div>
+
+        <div class="card shadow-sm">
+            <!-- Front-end only form: action can be wired to backend later -->
+            <form method="post" action="#">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" name="fullname" placeholder="Your full name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Create a password" minlength="6" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="confirm" placeholder="Repeat password" minlength="6" required>
+                    </div>
+                </div>
+
+                <div class="form-check my-3">
+                    <input class="form-check-input" type="checkbox" id="terms" required>
+                    <label class="form-check-label muted" for="terms">I agree to the terms and privacy policy</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+
+                <p class="text-center mt-3 muted">Already have an account? <a href="login.html">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="bg-animations">
+        <!-- STAR FIELD: two layered star textures + subtle twinkle -->
+        <div class="stars"></div>
+        <div class="stars"></div>
+
+        <!-- COLORED FLOATING BLOBS -->
+        <div class="blobs">
+            <div class="blob b1"></div>
+            <div class="blob b2"></div>
+            <div class="blob b3"></div>
+            <div class="blob b4"></div>
+        </div>
+
+        <!-- SPARKLES: moving small dots / streaks for vibrancy -->
+        <div class="sparkles">
+            <div class="s s1"></div>
+            <div class="s s2"></div>
+            <div class="s s3"></div>
+            <div class="s s4"></div>
+            <div class="s s5"></div>
+        </div>
+    </div>
+</body>
+</html>

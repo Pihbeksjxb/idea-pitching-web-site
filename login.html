@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+        .navbar {
+            animation: slideDown 0.8s ease-out;
+            background-color: #ffff00 !important; /* Yellow navbar */
+        }
+        .brand-box {
+            width: 200px;
+            height: 80px;
+            border: 3px solid #ffff00;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+            background: rgba(255, 107, 53, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: logoGlow 2s infinite alternate;
+            padding-left: 10px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #000;
+            text-shadow: none;
+            font-size: 1.2rem;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .nav-register {
+            color: #000;
+            border: 2px solid rgba(0,0,0,0.08);
+            background: rgba(0,0,0,0.08);
+            font-weight: 700;
+        }
+        .nav-register:hover {
+            background: rgba(0,0,0,0.12);
+            color: #000;
+            text-decoration: none;
+        }
+        .navbar-brand .emoji {
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes logoGlow {
+            from { text-shadow: 0 0 10px rgba(255, 107, 53, 0.8); }
+            to { text-shadow: 0 0 20px rgba(255, 170, 0, 1); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Updated: Gradient black -> blue login card and form styles */
+        .card {
+            animation: slideUp 1.2s ease-out 0.5s both;
+            border-radius: 15px;
+            transition: box-shadow 0.3s ease, transform 0.18s ease;
+            /* gradient: deep black to rich blue */
+            background: linear-gradient(145deg, #00080a 0%, #001826 40%, #003b5c 100%);
+            color: #e8f7ff; /* light bluish text */
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 10px 30px rgba(2,12,20,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(2,12,20,0.75);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Inputs: slightly translucent to match card, readable text */
+        .form-control {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: #eaf6ff;
+            -webkit-text-fill-color: #eaf6ff; /* autofill */
+            caret-color: #7ed0ff;
+            padding: 10px 12px;
+            border-radius: 10px;
+            box-shadow: none;
+        }
+        .form-control::placeholder { color: rgba(234,246,255,0.35); }
+        .form-control:focus {
+            border-color: rgba(30,144,255,0.95); /* blue focus */
+            box-shadow: 0 6px 22px rgba(30,144,255,0.12), 0 0 0 6px rgba(30,144,255,0.03);
+            background: rgba(255,255,255,0.02);
+            color: #fff;
+            -webkit-text-fill-color: #fff;
+            outline: none;
+        }
+        input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+            -webkit-text-fill-color: #eaf6ff !important;
+            box-shadow: 0 0 0px 1000px rgba(0,6,10,0.5) inset !important;
+        }
+
+        /* Button: blue gradient to match theme */
+        .btn-primary {
+            background: linear-gradient(90deg,#1e90ff,#00a3ff) !important;
+            border-color: rgba(0,120,220,0.9) !important;
+            color: #fff !important;
+            font-weight:700;
+            border-radius:10px;
+            box-shadow: 0 8px 28px rgba(0,80,140,0.18);
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 18px 48px rgba(0,110,200,0.25);
+        }
+        .btn-primary:active { transform: scale(0.99); }
+
+        a {
+            transition: color 0.3s ease;
+            font-weight: bold;
+            color: #cdeeff;
+        }
+        a:hover {
+            color: #1e90ff !important;
+        }
+        .heading-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(30,144,255,0.08);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            font-weight: bolder;
+            background: linear-gradient(45deg, #4db0ff, #006bb3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 14px rgba(0,90,150,0.15);
+            margin: 0;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #d9f2ff;
+        }
+        @media (max-width: 576px) {
+            .brand-box {
+                width: 150px;
+                height: 60px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animated overlay: stars, colorful blobs, geometric shapes.
+           Add <link rel="stylesheet" href="assets/animations.css"> in each page <head>
+           and the .bg-animations markup right after <body> open.
+        */
+        :root{
+          --star-color: #fff;
+          --blob-a: #ff6b35;
+          --blob-b: #00d4ff;
+          --blob-c: #9b59ff;
+          --blob-d: #ffd400;
+          --shape-a: rgba(255,255,255,0.06);
+          --bg-opacity: 0.12;
+        }
+
+        /* overlay container */
+        .bg-animations{
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          overflow: hidden;
+          mix-blend-mode: screen;
+        }
+
+        /* make page content appear above */
+        header, nav, .container, .card, main, footer { position: relative; z-index: 1; }
+
+        /* STAR FIELD */
+        .bg-animations .stars {
+          position: absolute; inset: 0; background-repeat: repeat;
+          background-image:
+            radial-gradient(var(--star-color) 0.8px, rgba(255,255,255,0) 1px);
+          background-size: 220px 220px;
+          opacity: 0.2;
+          animation: starsMove 30s linear infinite;
+          filter: drop-shadow(0 0 2px rgba(255,255,255,0.03));
+        }
+        .bg-animations .stars.layer {
+          background-image: radial-gradient(var(--star-color) 1.6px, rgba(255,255,255,0) 2.2px);
+          background-size: 90px 90px;
+          opacity: 0.12;
+          animation: starsDrift 45s linear infinite reverse;
+        }
+        @keyframes starsMove { from{ transform: translateY(0) } to{ transform: translateY(-60px) } }
+        @keyframes starsDrift { from{ transform: translateX(0) } to{ transform: translateX(60px) } }
+
+        /* COLOR BLOBS */
+        .bg-animations .blobs{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+        .bg-animations .blob{
+          position:absolute; border-radius:50%; filter: blur(36px) saturate(1.1); opacity: var(--bg-opacity);
+          will-change: transform, opacity;
+        }
+        .bg-animations .blob.b1{ width:420px;height:420px; left:-120px; top:6%; background: radial-gradient(circle at 30% 30%, var(--blob-a), transparent 45%); animation: floatA 14s ease-in-out infinite; }
+        .bg-animations .blob.b2{ width:300px;height:300px; right:-80px; top:10%; background: radial-gradient(circle at 20% 20%, var(--blob-b), transparent 45%); animation: floatB 16s ease-in-out infinite; }
+        .bg-animations .blob.b3{ width:480px;height:480px; left:6%; bottom:-140px; background: radial-gradient(circle at 60% 60%, var(--blob-c), transparent 45%); animation: floatC 20s ease-in-out infinite; opacity:0.10; }
+        .bg-animations .blob.b4{ width:220px;height:220px; right:12%; bottom:-80px; background: radial-gradient(circle at 50% 50%, var(--blob-d), transparent 45%); animation: floatA 12s ease-in-out infinite; opacity:0.14; }
+
+        @keyframes floatA{ 0%{transform:translateY(0)}50%{transform:translateY(-28px) translateX(8px)}100%{transform:translateY(0)} }
+        @keyframes floatB{ 0%{transform:translateY(0)}50%{transform:translateY(-44px) translateX(-14px)}100%{transform:translateY(0)} }
+        @keyframes floatC{ 0%{transform:translateY(0)}50%{transform:translateY(-60px) translateX(18px)}100%{transform:translateY(0)} }
+
+        /* GEOMETRIC SHAPES */
+        .bg-animations .shapes{ position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: overlay; }
+        .bg-animations .shape {
+          position:absolute; opacity:0.08; filter: blur(6px);
+          transform-origin:center;
+        }
+        .bg-animations .shape.s1{ width:220px;height:220px; left:6%; top:20%; background: linear-gradient(135deg,#ffffff 0%, transparent 60%); clip-path: polygon(50% 0%, 100% 100%, 0% 100%); animation: spinSlow 24s linear infinite; }
+        .bg-animations .shape.s2{ width:160px;height:160px; right:8%; top:30%; background: linear-gradient(135deg,#00d4ff26, transparent 60%); transform: rotate(16deg); animation: spinRev 28s linear infinite; }
+        .bg-animations .shape.s3{ width:120px;height:120px; left:60%; bottom:20%; background: linear-gradient(135deg,#ff6b3526, transparent 60%); animation: spinSlow 30s linear infinite; }
+
+        @keyframes spinSlow { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }
+        @keyframes spinRev  { from{ transform: rotate(0deg) } to{ transform: rotate(-360deg) } }
+
+        /* SPARKLES / GLINTS */
+        .bg-animations .sparkles{ position:absolute; inset:0; z-index:0; pointer-events:none; mix-blend-mode: screen; }
+        .bg-animations .sparkles .s{ position:absolute; width:6px;height:6px;border-radius:50%; background: radial-gradient(circle,#fff, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 70%); filter: blur(0.8px); opacity:0.9; animation: twinkle 7s linear infinite; }
+        .bg-animations .sparkles .s.s1{ left:12%; top:18%; animation-duration:6.8s; }
+        .bg-animations .sparkles .s.s2{ left:32%; top:40%; animation-duration:8.2s; background: #ffd9a6; width:8px;height:8px; }
+        .bg-animations .sparkles .s.s3{ left:66%; top:12%; animation-duration:7.1s; background: #a6e7ff; opacity:0.85; }
+        @keyframes twinkle { 0%{opacity:0; transform:translateY(0)}10%{opacity:1}50%{transform:translateY(-36px);opacity:.9}90%{opacity:0.2}100%{transform:translateY(0);opacity:0} }
+
+        /* responsive reductions */
+        @media (max-width:767px){
+          .bg-animations .blob.b1, .bg-animations .blob.b3 { display:none; }
+          .bg-animations .shape { display:none; }
+          .bg-animations .sparkles .s { display:none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark">
+        <div class="container d-flex align-items-center">
+            <div class="brand-box">
+                <span class="navbar-brand"><span class="emoji">💡</span> Idea Pitching</span>
+            </div>
+
+            <!-- Register button added so new users can open the registration page from navbar -->
+            <div class="ms-auto">
+                <a href="registration.html" class="btn nav-register">Register</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5 fade-in" style="max-width: 550px;">
+        <div class="heading-box">
+            <h2>Login</h2>
+        </div>
+        <div class="card p-4 shadow">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Enter your password">
+                </div>
+                <a href="index.html" class="btn btn-primary w-100">Login</a>
+            </form>
+            <p class="text-center mt-3">New user? <a href="registration.html">Register</a></p>
+        </div>
+    </div>
+
+    <!-- Animated background overlay -->
+    <div class="bg-animations">
+        <div class="stars"></div>
+        <div class="stars layer"></div>
+        <div class="blobs">
+            <div class="blob b1"></div>
+            <div class="blob b2"></div>
+            <div class="blob b3"></div>
+            <div class="blob b4"></div>
+        </div>
+        <div class="shapes">
+            <div class="shape s1"></div>
+            <div class="shape s2"></div>
+            <div class="shape s3"></div>
+        </div>
+        <div class="sparkles">
+            <div class="s s1"></div>
+            <div class="s s2"></div>
+            <div class="s s3"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
